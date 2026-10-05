@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edukační Had - Výpočetní technika</title>
+    <!-- Propojení se styly -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="intro-screen">
+    <h2>Vítej ve hře Had!</h2>
+    <p>Před spuštěním hry zadej své jméno a příjmení:</p>
+    <input type="text" id="player-name" placeholder="Jméno a příjmení" required>
+    <br><br>
+    <button class="start-btn" onclick="startGame()">Spustit hru</button>
+</div>
+
+<div id="game-container">
+    <h2 id="game-title">Had: Základy výpočetní techniky</h2>
+    <div id="score">Sežráno krmiva: 0 | Otázky: 0/40</div>
+    
+    <div style="position: relative;">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div id="resume-msg">Hra je pozastavena.<br><br>Stiskni MEZERNÍK pro pokračování</div>
+    </div>
+    
+    <div id="mobile-controls">
+        <div class="row">
+            <button class="btn" id="btn-left">← L</button>
+            <button class="btn" id="btn-right">P →</button>
+        </div>
+        <button class="btn-space" id="btn-space-mobile">Pokračovat (Mezerník)</button>
+    </div>
+
+    <div id="quiz-overlay">
+        <h3 id="question-text">Otázka</h3>
+        <button class="ans-btn" id="opt0">A</button>
+        <button class="ans-btn" id="opt1">B</button>
+        <button class="ans-btn" id="opt2">C</button>
+    </div>
+</div>
+
+<div id="result-table-container">
+    <h3 id="result-player-name">Hra dokončena!</h3>
+    <div id="table-space"></div>
+    <button onclick="sendEmail()" style="padding:10px 20px; background:#2ecc71; color:white; border:none; border-radius:5px; cursor:pointer;">
+        Odeslat výsledky e-mailem
+    </button>
+</div>
+
+<!-- Propojení se skriptem -->
+<script src="script.js"></script>
+</body>
+</html>
+
