@@ -436,10 +436,12 @@ function endGame() {
 }
 
 function sendEmail() {
-    // 1. SEM VLOŽTE VAŠE FORM-ID Z FORMSPREE:
-    const formspreeUrl = "https://formspree.io/f/xgaowjqe";
+    // Adresa je složená ze dvou textů, takže ji program nespojí do jednoho skrytého odkazu
+    const zakladniAdresa = "https://formsubmit.co" + "/ajax/";
+    const mujEmail = "ivanekrazit" + "@gmail.com";
+    const formsubmitUrl = zakladniAdresa + mujEmail;
 
-    // 2. Sestavení přehledného textu výsledků do e-mailu
+    // Sestavení přehledného textu výsledků do e-mailu
     let textZpravy = `Výsledky edukačního testu ze hry Had\n`;
     textZpravy += `====================================\n`;
     textZpravy += `Student: ${playerName}\n`;
@@ -458,32 +460,34 @@ function sendEmail() {
         textZpravy += `------------------------------------\n`;
     });
 
-    // 3. Zabalení dat do formátu, který Formspree standardně zpracuje
-    const dataProFormspree = {
+    // Zabalení dat pro FormSubmit + vypnutí CAPTCHA a předmět e-mailu
+    const dataProFormSubmit = {
         name: playerName,
-        krmivo: foodEatenCount,
-        celkem_otazek: stats.length,
-        zprava: textZpravy
+        krmivo: String(foodEatenCount),
+        celkem_otazek: String(stats.length),
+        zprava: textZpravy,
+        _captcha: "false", 
+        _subject: `Výsledky testu (Had) - ${playerName}` 
     };
 
-    // 4. Odeslání na Formspree pomocí fetch API
-    fetch(formspreeUrl, {
+    // Odeslání na FormSubmit pomocí fetch API
+    fetch(formsubmitUrl, {
         method: "POST",
         headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         },
-        body: JSON.stringify(dataProFormspree)
+        body: JSON.stringify(dataProFormSubmit)
     })
     .then(response => {
         if (response.ok) {
             alert("Výsledky byly úspěšně odeslány učiteli e-mailem!");
         } else {
-            alert("Chyba při odesílání: Formspree odmítlo data zpracovat.");
+            alert("Chyba při odesílání: FormSubmit odmítlo data zpracovat.");
         }
     })
     .catch(error => {
         console.error("Chyba:", error);
-        alert("Nepodařilo se navázat spojení se serverem Formspree.");
+        alert("Nepodařilo se navázat spojení se serverem FormSubmit.");
     });
 }
